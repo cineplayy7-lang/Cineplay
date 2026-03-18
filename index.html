@@ -87,22 +87,42 @@ section, nav, footer, div {
   overflow: hidden;
   background: linear-gradient(135deg, var(--red) 0%, #ff2d3a 50%, var(--red) 100%);
   background-size: 200% 200%;
-  animation: shimmer-bg 3s ease infinite;
-  box-shadow: 0 4px 30px rgba(229,9,20,0.4), 0 0 0 0 rgba(229,9,20,0);
+  animation: shimmer-bg 3s ease infinite, btn-glow-pulse 3s ease-in-out infinite;
   transition: transform 0.3s, box-shadow 0.3s;
   letter-spacing: 0.3px;
 }
+.cta-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  transform: skewX(-20deg);
+  animation: btn-light-sweep 4s ease-in-out infinite;
+  pointer-events: none;
+}
 .cta-btn:hover {
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 8px 40px rgba(229,9,20,0.5), 0 0 80px rgba(229,9,20,0.15);
+  box-shadow: 0 8px 40px rgba(229,9,20,0.6), 0 0 80px rgba(229,9,20,0.25), 0 0 120px rgba(229,9,20,0.1);
 }
 .cta-btn:active { transform: scale(0.98); }
-.cta-btn svg { width: 20px; height: 20px; }
+.cta-btn svg { width: 20px; height: 20px; position: relative; z-index: 1; }
 
 @keyframes shimmer-bg {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
+}
+@keyframes btn-glow-pulse {
+  0%, 100% { box-shadow: 0 4px 25px rgba(229,9,20,0.4), 0 0 50px rgba(229,9,20,0.12), 0 0 80px rgba(229,9,20,0.06); }
+  50% { box-shadow: 0 8px 40px rgba(229,9,20,0.55), 0 0 70px rgba(229,9,20,0.22), 0 0 110px rgba(229,9,20,0.1); }
+}
+@keyframes btn-light-sweep {
+  0%, 100% { left: -60%; opacity: 0; }
+  10% { opacity: 1; }
+  60% { left: 120%; opacity: 0; }
 }
 
 .cta-btn-outline {
@@ -340,7 +360,7 @@ section { position: relative; z-index: 1; }
 .mockup-featured-info h3 {
   font-size: clamp(18px, 3vw, 28px);
   font-weight: 800;
-  margin-bottom: 6px;
+  
 }
 .mockup-featured-info p {
   font-size: 12px;
@@ -438,6 +458,7 @@ section { position: relative; z-index: 1; }
   z-index: 2;
 }
 .channel-logo {
+  
   display: flex;
   align-items: center;
   justify-content: center;
@@ -616,6 +637,80 @@ section { position: relative; z-index: 1; }
 
 
 
+/* ─── MOVIE POSTERS CAROUSEL ─── */
+.posters-section {
+  padding: 20px 0 60px;
+  overflow: hidden;
+}
+.posters-block {
+  margin-bottom: 32px;
+}
+.posters-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  padding-left: 24px;
+  margin-bottom: 14px;
+  letter-spacing: 0.3px;
+}
+.posters-track {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 0 24px 10px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.posters-track::-webkit-scrollbar { display: none; }
+.posters-loading {
+  color: var(--text-dim);
+  font-size: 13px;
+  padding: 40px 0;
+}
+.poster-card {
+  flex-shrink: 0;
+  width: 130px;
+  border-radius: 12px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.poster-card:hover {
+  transform: scale(1.06) translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.6);
+  border-color: rgba(255,255,255,0.12);
+}
+.poster-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 2/3;
+  object-fit: cover;
+  background: rgba(255,255,255,0.05);
+}
+.poster-rating {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px);
+  padding: 3px 7px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffd700;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.poster-rating::before {
+  content: '★';
+  font-size: 10px;
+}
+
 /* ─── PROMO BANNER ─── */
 .promo-banner {
   padding: 40px 24px;
@@ -678,7 +773,7 @@ section { position: relative; z-index: 1; }
   letter-spacing: 3px;
   font-weight: 700;
   display: block;
-  margin-bottom: 6px;
+  
 }
 .tag-red { color: var(--red); }
 .tag-blue { color: var(--blue); }
@@ -1061,7 +1156,7 @@ section { position: relative; z-index: 1; }
   font-family: 'Bebas Neue', Impact, sans-serif;
   font-size: clamp(42px, 10vw, 64px);
   line-height: 1;
-  margin-bottom: 6px;
+  
   letter-spacing: 2px;
 }
 .stat-number .plus { color: var(--blue); }
@@ -1574,14 +1669,14 @@ footer p {
 <!-- Nav -->
 <nav>
   <div class="logo"><img src="data:image/png;base64,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" alt="CinePlay"></div>
-  <a href="https://seu-link-aqui.com" class="cta-btn">Teste 7 dias grátis
+  <a href="https://bio.s7strategy.com.br/querotestar7dias" class="cta-btn">Teste 7 dias grátis
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
   </a>
 </nav>
 
 <!-- Floating CTA -->
 <div class="floating-cta" id="floatingCta">
-  <a href="https://seu-link-aqui.com" class="cta-btn">Teste 7 dias grátis
+  <a href="https://bio.s7strategy.com.br/querotestar7dias" class="cta-btn">Teste 7 dias grátis
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
   </a>
 </div>
@@ -1596,7 +1691,7 @@ footer p {
   <p>Ligar a TV, dar play… e rodar liso.</p>
   <p style="font-size:clamp(13px,2vw,15px);color:#7a7a8a;max-width:400px;line-height:1.6;margin-bottom:36px;">Sem precisar tentar de novo. Sem travar no meio. Só assistir do início ao fim.</p>
   <div class="hero-buttons">
-    <a href="https://seu-link-aqui.com" class="cta-btn">
+    <a href="https://bio.s7strategy.com.br/querotestar7dias" class="cta-btn">
       Teste 7 dias grátis
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
     </a>
@@ -1738,6 +1833,22 @@ footer p {
       </div>
     </div>
 
+  </div>
+</section>
+
+<!-- MOVIE POSTERS CAROUSEL -->
+<section class="posters-section">
+  <div class="posters-block">
+    <h3 class="posters-label">Filmes em Alta</h3>
+    <div class="posters-track" id="moviesTrack">
+      <div class="posters-loading">Carregando...</div>
+    </div>
+  </div>
+  <div class="posters-block">
+    <h3 class="posters-label">Séries Populares</h3>
+    <div class="posters-track" id="seriesTrack">
+      <div class="posters-loading">Carregando...</div>
+    </div>
   </div>
 </section>
 
@@ -2028,7 +2139,7 @@ footer p {
   <div class="final-cta-inner reveal">
     <h2>Descubra por que tanta gente está usando</h2>
     <p>Acesse por 7 dias e veja a diferença na prática. Sem complicação.</p>
-    <a href="#" class="cta-btn" onclick="event.preventDefault();">
+    <a href="https://bio.s7strategy.com.br/querotestar7dias" class="cta-btn">
       Teste 7 dias grátis
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     </a>
@@ -2039,6 +2150,40 @@ footer p {
 <footer>
   <p>CinePlay © 2026 — Todos os direitos reservados</p>
 </footer>
+
+<script>
+// ─── TMDB Poster Carousels ───
+const TMDB_KEY = '45ae8f447f288ac95304e25ca1f4686f';
+const TMDB_IMG = 'https://image.tmdb.org/t/p/w300';
+
+function createPosterCard(item) {
+  if (!item.poster_path) return '';
+  const title = (item.title || item.name || '').replace(/"/g, '&quot;');
+  const rating = item.vote_average ? item.vote_average.toFixed(1) : '';
+  return '<div class="poster-card">' +
+    '<img src="' + TMDB_IMG + item.poster_path + '" alt="' + title + '" loading="lazy">' +
+    (rating ? '<div class="poster-rating">' + rating + '</div>' : '') +
+  '</div>';
+}
+
+async function loadPosters(endpoint, trackId) {
+  try {
+    const res = await fetch('https://api.themoviedb.org/3/' + endpoint + '?language=pt-BR&api_key=' + TMDB_KEY);
+    const data = await res.json();
+    const trackEl = document.getElementById(trackId);
+    if (data.results && data.results.length) {
+      trackEl.innerHTML = data.results.map(createPosterCard).join('');
+    } else {
+      trackEl.innerHTML = '';
+    }
+  } catch(e) {
+    document.getElementById(trackId).innerHTML = '';
+  }
+}
+
+loadPosters('trending/movie/week', 'moviesTrack');
+loadPosters('trending/tv/week', 'seriesTrack');
+</script>
 
 <script>
 // ─── Duplicate carousel for infinite loop ───
